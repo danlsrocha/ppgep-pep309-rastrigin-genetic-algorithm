@@ -5,9 +5,8 @@ Uso:
     python run.py tune                                  # busca em grade dos parâmetros
     python run.py setup                                 # apenas cria o .venv e instala as dependências
 
-Na primeira execução cria o ambiente virtual `.venv` e instala o requirements.txt;
-nas seguintes, reaproveita o ambiente (reinstala só se o requirements.txt mudar).
-Usa apenas a biblioteca padrão, então basta ter o Python 3 instalado.
+Na primeira execução, cria o ambiente virtual `.venv` e instala os pacotes de requirements.txt. 
+Nas execuções seguintes, reaproveita o ambiente e reinstala os pacotes se o requirements.txt for alterado.
 """
 
 # -------------------------------------------------------------------- #
@@ -30,7 +29,7 @@ REQUISITOS = RAIZ / "requirements.txt"
 MARCA = VENV / ".requirements.instalado"
 
 # Comandos que executam um script do projeto
-SCRIPTS = {"experiment": "experiment.py", "tune": "tune.py"}
+SCRIPTS = {"experiment": "src/experiment.py", "tune": "src/tune.py"}
 
 
 # -------------------------------------------------------------------- #

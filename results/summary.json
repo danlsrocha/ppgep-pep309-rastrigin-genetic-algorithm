@@ -1,0 +1,35 @@
+{
+  "master_seed": 2026,
+  "runs": 30,
+  "cases": {
+    "C1": {
+      "name": "C1: BLX-alpha + Muta\u00e7\u00e3o Gaussiana",
+      "best": 1.1064662004685033,
+      "worst": 3.509215190811915,
+      "mean": 1.9908754253182943,
+      "std": 0.739504951457071,
+      "median": 1.7121930138052903,
+      "mean_time_s": 0.858025687533321,
+      "best_solution_max_abs_x": 0.02005314066279113
+    },
+    "C2": {
+      "name": "C2: Crossover Aritm\u00e9tico + Muta\u00e7\u00e3o N\u00e3o Uniforme",
+      "best": 0.002380562774987993,
+      "worst": 0.010424003091088707,
+      "mean": 0.005180595059012679,
+      "std": 0.0019013945150633022,
+      "median": 0.0047637390459271955,
+      "mean_time_s": 1.0249970981332657,
+      "best_solution_max_abs_x": 0.0010042245197586267
+    }
+  },
+  "paired_t_test": {
+    "t": 14.700938083309019,
+    "p_value": 5.640530972629404e-15,
+    "df": 29,
+    "mean_difference_C1_minus_C2": 1.9856948302592816,
+    "shapiro_p_differences": 0.0025400473901051822,
+    "wilcoxon_p": 1.862645149230957e-09,
+    "reject_H0_at_0.05": true
+  }
+}

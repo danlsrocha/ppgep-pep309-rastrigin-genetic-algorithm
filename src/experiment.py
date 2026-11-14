@@ -1,9 +1,9 @@
 #!/bin/sh
-''''exec "$(d=$(dirname "$0"); [ -x "$d/.venv/bin/python" ] && echo "$d/.venv/bin/python" || echo python3)" "$0" "$@" # '''
+''''exec "$(d=$(dirname "$0"); [ -x "$d/../.venv/bin/python" ] && echo "$d/../.venv/bin/python" || echo python3)" "$0" "$@" # '''
 """Experimento final: 30 execuções aleatorizadas de cada caso de teste, estatísticas, teste T pareado e gráficos.
 
-Uso:  python experiment.py [--runs 30] [--seed 2026]
-Saídas (pasta results/): runs.csv, summary.json, convergence.png, boxplot.png
+Uso:  python run.py experiment [--runs 30] [--seed 2026]
+Saídas (pasta results/): runs.csv, individuals.csv, summary.json, convergence.png, boxplot.png
 """
 
 # -------------------------------------------------------------------- #
@@ -55,6 +55,8 @@ def main() -> None:
     times = {k: [] for k in cases}       # Tempo de cada execução (s)
     histories = {k: [] for k in cases}   # Histórico de mínimos por geração
     best_x = {}                          # Melhor (custo, solução) por caso
+    worst_x = {}                         # Pior (custo, solução) por caso
+    extreme_runs = {}                    # Execução do melhor e do pior
 
     # ---------------------------------------------------------------- #
     # Execuções do AG
@@ -92,6 +94,12 @@ def main() -> None:
             # Guarda a melhor solução encontrada em todas as execuções
             if k not in best_x or cost < best_x[k][0]:
                 best_x[k] = (cost, x)
+                extreme_runs.setdefault(k, {})["best"] = i
+
+            # Guarda a pior das melhores soluções (pior execução)
+            if k not in worst_x or cost > worst_x[k][0]:
+                worst_x[k] = (cost, x)
+                extreme_runs.setdefault(k, {})["worst"] = i
 
     # ---------------------------------------------------------------- #
     # Resultados brutos (runs.csv)
@@ -109,6 +117,23 @@ def main() -> None:
             w.writerow([i, int(run_seeds[i])]
                        + [f"{finals[k][i]:.10f}" for k in cases]
                        + [f"{times[k][i]:.4f}" for k in cases])
+
+    # ---------------------------------------------------------------- #
+    # Melhor e pior indivíduos (individuals.csv)
+    # ---------------------------------------------------------------- #
+    # Uma linha por (caso, tipo), com o vetor completo de n variáveis em
+    # precisão total, para que possa ser conferido na função de
+    # Rastrigin (o custo gravado é recalculado a partir do vetor)
+    with open(out / "individuals.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["case", "kind", "run", "cost"]
+                   + [f"x{j + 1}" for j in range(ga.N_VARS)])
+
+        for k in cases:
+            for kind, (_, x) in (("best", best_x[k]), ("worst", worst_x[k])):
+                w.writerow([k, kind, extreme_runs[k][kind],
+                            repr(float(ga.rastrigin(x)[0]))]
+                           + [repr(float(v)) for v in x])
 
     # ---------------------------------------------------------------- #
     # Estatísticas descritivas por caso

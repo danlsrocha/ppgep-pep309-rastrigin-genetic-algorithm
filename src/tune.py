@@ -1,5 +1,5 @@
 #!/bin/sh
-''''exec "$(d=$(dirname "$0"); [ -x "$d/.venv/bin/python" ] && echo "$d/.venv/bin/python" || echo python3)" "$0" "$@" # '''
+''''exec "$(d=$(dirname "$0"); [ -x "$d/../.venv/bin/python" ] && echo "$d/../.venv/bin/python" || echo python3)" "$0" "$@" # '''
 """Busca em grade (grid search) piloto utilizada para escolher os parâmetros do AG em cada caso de teste.
 
 Usa sementes disjuntas das do experimento final (experiment.py) e o mesmo
