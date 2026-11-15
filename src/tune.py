@@ -2,8 +2,8 @@
 ''''exec "$(d=$(dirname "$0"); [ -x "$d/../.venv/bin/python" ] && echo "$d/../.venv/bin/python" || echo python3)" "$0" "$@" # '''
 """Busca em grade (grid search) piloto utilizada para escolher os parâmetros do AG em cada caso de teste.
 
-Usa sementes disjuntas das do experimento final (experiment.py) e o mesmo
-orçamento para os dois casos, de modo que nenhum seja favorecido.
+Usa sementes disjuntas das do experimento final (experiment.py) e, nos dois
+casos, as mesmas sementes e o mesmo número de execuções por configuração.
 Grava results/tuning.csv e imprime a melhor configuração de cada caso.
 """
 
@@ -33,8 +33,8 @@ PCS = [0.9, 1.0]
 
 # Grades por caso sobre (probabilidade de mutação, parâmetro da
 # mutação, parâmetro do crossover).
-# Rodada 2: refinamento em torno da melhor região da rodada 1 (a rodada
-# 1 está em results/tuning_round1.csv).
+# Rodada 2: refinamento em torno da melhor região de uma rodada 1
+# exploratória (não incluída no repositório).
 GRIDS = {
     "C1": {
         "pm": [0.02, 0.05, 0.1],
