@@ -101,7 +101,7 @@ def linear_ranking_fitness(
     # Ordena os custos em ordem decrescente (+custo = -fitness)
     order = np.argsort(-costs, kind="stable")
 
-    # Cria um vetor de ranks, (melhor indivíduo = 0; pior = n-1)
+    # Cria um vetor de ranks (pior indivíduo = 0; melhor = n-1)
     ranks = np.empty(n) 
     ranks[order] = np.arange(n)
 
